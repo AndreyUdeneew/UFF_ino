@@ -5,8 +5,8 @@ void setup()
 {
   pinMode(2, INPUT); /// Our camera strobe in HIGH - Acquiring, LOW - not acquiring
   for(int i = 0; i < WL_NUM; i++)
-    pinMode(3 + i ,OUTPUT); // LED control OUTPUTS (could be later moved to PWM or AM intensity control)
-  pinMode(WL_NUM + 3, OUTPUT);  //Loop control; happens only once per cycle of all LEDs; for debug
+    pinMode(5 + i ,OUTPUT); // LED control OUTPUTS (could be later moved to PWM or AM intensity control)
+  pinMode(WL_NUM + 5, OUTPUT);  //Loop control; happens only once per cycle of all LEDs; for debug
   pinMode(13, OUTPUT); ///LAMP !
 }
 
@@ -21,21 +21,21 @@ void loop()
   //Here we manage LEDS to work sequentially
   if(CurState < PrevState)
   {
-    digitalWrite(3 + c, LOW);
-    //    analogWrite(3 + c, 0);
+//    digitalWrite(5 + c, LOW);
+        analogWrite(5 + c, 0);
     lampc++;
     c++;
     if(c >= WL_NUM)
       c = 0;
-    digitalWrite(3 + c, HIGH);
-    //    analogWrite(3 + c, PWM_UV);
+//    digitalWrite(5 + c, HIGH);
+        analogWrite(5 + c, PWM_UV);
   }
  
   //Here Loop control signal
   if(CurState > PrevState && c == 0)
-    digitalWrite(3 + WL_NUM, HIGH);
+    digitalWrite(5 + WL_NUM, HIGH);
   if(CurState < PrevState && c ==0)
-    digitalWrite(3 + WL_NUM, LOW);
+    digitalWrite(5 + WL_NUM, LOW);
  
   //Arduino onboard lamp flashing if frames are arriving; for debug purposes
   if(lampc > 20)
