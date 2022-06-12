@@ -1,6 +1,8 @@
 int WL_NUM = 2;   //Number of Wavelengths (LED drivers connected), should not be higher than 7
 int PWM_White = 20;
 int PWM_UV = 20;
+int UV_LED = 5;
+int WHITE_LED = 6;
 void setup()
 {
   pinMode(2, INPUT); /// Our camera strobe in HIGH - Acquiring, LOW - not acquiring
@@ -8,6 +10,7 @@ void setup()
     pinMode(5 + i ,OUTPUT); // LED control OUTPUTS (could be later moved to PWM or AM intensity control)
   pinMode(WL_NUM + 5, OUTPUT);  //Loop control; happens only once per cycle of all LEDs; for debug
   pinMode(13, OUTPUT); ///LAMP !
+  analogWrite(WHITE_LED, PWM_White);
 }
 
 int CurState = 0;
@@ -22,13 +25,16 @@ void loop()
   if(CurState < PrevState)
   {
 //    digitalWrite(5 + c, LOW);
-        analogWrite(5 + c, 0);
-    lampc++;
-    c++;
+//        analogWrite(5 + c, 0);
+          analogWrite(UV_LED, 0);
+
+//    lampc++;
+//    c++;
     if(c >= WL_NUM)
-      c = 0;
+//      c = 0;
 //    digitalWrite(5 + c, HIGH);
-        analogWrite(5 + c, PWM_UV);
+//        analogWrite(5 + c, PWM_UV);
+          analogWrite(UV_LED, PWM_UV);
   }
  
   //Here Loop control signal
