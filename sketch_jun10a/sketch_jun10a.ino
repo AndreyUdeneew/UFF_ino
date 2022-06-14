@@ -28,8 +28,8 @@ void loop()
 //        analogWrite(5 + c, 0);
           analogWrite(UV_LED, 0);
 
-//    lampc++;
-//    c++;
+    lampc++;
+    c++;
     if(c >= WL_NUM)
 //      c = 0;
 //    digitalWrite(5 + c, HIGH);
