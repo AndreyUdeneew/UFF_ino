@@ -1,11 +1,23 @@
-int WL_NUM = 2;   //Number of Wavelengths (LED drivers connected), should not be higher than 7
-int PWM_White = 20;
-int PWM_UV = 250;
-int UV_LED = 5;
-int WHITE_LED = 6;
+int pinsNum = 6;
+int PWMvals[pinsNum] = {}; // 0 - 255
+int steps[pinsNum] = {0,1,2,3};// 0 = Dunkelheit, 1 - white, 2 - UV, 3 - RED
+bool pinsPWM[pinsNum] = {true,true,true,true,true,true};
+int pins[pinsNum] = {3,5,6,9,10,11};
+int pimCombinations1[][]=
+{{}
+}};
+int pimCombinations2[][]=
+{{}
+}};
+int pimCombinations3[][]=
+{{}
+}};
+int pimCombinations4[][]=
+{{}
+}};
 void setup()
 {
-  pinMode(2, INPUT); /// Our camera strobe in HIGH - Acquiring, LOW - not acquiring
+    pinMode(2, INPUT); /// Our camera strobe in HIGH - Acquiring, LOW - not acquiring
   pinMode(UV_LED, OUTPUT);// UV LED
   pinMode(WHITE_LED, OUTPUT);// White LED
 //  for(int i = 0; i < WL_NUM; i++)
@@ -30,15 +42,13 @@ void loop()
 //        analogWrite(5 + c, 0);
           analogWrite(UV_LED, 0);
 
-    lampc++;
-    c++;
+//    lampc++;
+//    c++;
     if(c >= WL_NUM)
-    {
-      c = 0;
+//      c = 0;
 //    digitalWrite(5 + c, HIGH);
 //        analogWrite(5 + c, PWM_UV);
           analogWrite(UV_LED, PWM_UV);
-    }
   }
  
   //Here Loop control signal
