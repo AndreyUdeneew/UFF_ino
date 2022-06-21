@@ -15,7 +15,7 @@ int pinsCombinations0[stepsNum][pinsNum] =
   {1, 0},
   {1, 1}
 };
-int pinsCombinations1[stepNum][pinsNum] =
+int pinsCombinations1[stepsNum][pinsNum] =
 {
   {0, 0, 0},
   {0, 1, 1},
@@ -78,7 +78,7 @@ void loop()
   //Here Loop control signal
   if (CurState > PrevState && curStep == 0)
     digitalWrite(5 + WL_NUM, HIGH);
-  if (CurState < PrevState && c == 0)
+  if (CurState < PrevState && curStep == 0)
     digitalWrite(5 + WL_NUM, LOW);
 
   //Arduino onboard lamp flashing if frames are arriving; for debug purposes
