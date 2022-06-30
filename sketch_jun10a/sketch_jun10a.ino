@@ -1,8 +1,8 @@
 int WL_NUM = 2;   //Number of Wavelengths (LED drivers connected), should not be higher than 7
 int PWM_White = 20;
 int PWM_UV = 250;
-int UV_LED = 5;
-int WHITE_LED = 6;
+int UV_LED = 6;
+int WHITE_LED = 5;
 void setup()
 {
   pinMode(2, INPUT); /// Our camera strobe in HIGH - Acquiring, LOW - not acquiring

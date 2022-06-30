@@ -1,6 +1,8 @@
 #define pinsNum 3
 #define stepsNum 3
 
+String cmd, CMDcur;
+int programNumber;
 int WL_NUM = 2;   //Number of Wavelengths (LED drivers connected), should not be higher than 7
 int PWM_White = 20;
 int PWM_UV = 250;
@@ -44,6 +46,25 @@ void setup()
   //  pinMode(WL_NUM + 5, OUTPUT);  //Loop control; happens only once per cycle of all LEDs; for debug
   pinMode(13, OUTPUT); ///LAMP !
   analogWrite(WHITE_LED, PWM_White);
+  Serial.begin(115200);
+  Serial.setTimeout(100);
+  while (!Serial) {;}
+}
+
+void waiting_4_command() {
+  char num_of_cyckles, numOFpinsH, numOFpinsL;
+  String num_of_cyckles_str;
+  cmd = "";
+  if (Serial.available()) {
+    cmd = Serial.readString();
+    cmd.trim();
+  }
+
+    if (cmd.substring(0, 4) == "MODE") {
+        programNumber = cmd[4] - '0';               
+    cmd = "changeProgram";
+    CMDcur = "changeProgram";
+  }
 }
 
 int CurState = 0;
