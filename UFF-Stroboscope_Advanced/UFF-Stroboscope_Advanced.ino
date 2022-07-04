@@ -29,14 +29,14 @@ void setup()
 
 
 void Strob_Input_Handler() {
-  if(counter == 1){
-analogWrite(UV_LED, PWM_UV);    
+  if (counter == 1) {
+    analogWrite(UV_LED, PWM_UV);
   }
-  else{
-  analogWrite(UV_LED, 0);  
+  else {
+    analogWrite(UV_LED, 0);
   }
-    counter++;  // + синхр.
-  if(counter == 2){
+  counter++;  // + синхр.
+  if (counter == 2) {
     counter = 0;
   }
 }
@@ -49,31 +49,31 @@ void waiting_4_command() {
   }
 
 
-    if (cmd.substring(0, 2) == "UV") {
-        PWM_VALH = cmd[2] - '0';
-        PWM_VALL = cmd[3] - '0';
-        if(cmd[3] != '\0'){
-        PWM_VAL = (PWM_VALH*10) + (PWM_VALL*1);
-        }
-        else{
-         PWM_VAL = (PWM_VALH*1) + (PWM_VALL*0); 
-        }        
-PWM_UV = PWM_VAL;
+  if (cmd.substring(0, 2) == "UV") {
+    PWM_VALH = cmd[2] - '0';
+    PWM_VALL = cmd[3] - '0';
+    if (cmd[3] != '\0') {
+      PWM_VAL = (PWM_VALH * 10) + (PWM_VALL * 1);
+    }
+    else {
+      PWM_VAL = (PWM_VALH * 1) + (PWM_VALL * 0);
+    }
+    PWM_UV = PWM_VAL;
   }
 
-    if (cmd.substring(0, 2) == "WH") {
-        PWM_VALH = cmd[2] - '0';
-        PWM_VALL = cmd[3] - '0';
-        if(cmd[3] != '\0'){
-        PWM_VAL = (PWM_VALH*10) + (PWM_VALL*1);
-        }
-        else{
-         PWM_VAL = (PWM_VALH*1) + (PWM_VALL*0); 
-        }        
-PWM_White = PWM_VAL;
-analogWrite(WHITE_LED, PWM_White);
+  if (cmd.substring(0, 2) == "WH") {
+    PWM_VALH = cmd[2] - '0';
+    PWM_VALL = cmd[3] - '0';
+    if (cmd[3] != '\0') {
+      PWM_VAL = (PWM_VALH * 10) + (PWM_VALL * 1);
+    }
+    else {
+      PWM_VAL = (PWM_VALH * 1) + (PWM_VALL * 0);
+    }
+    PWM_White = PWM_VAL;
+    analogWrite(WHITE_LED, PWM_White);
   }
-  }
+}
 
 void loop()
 {
