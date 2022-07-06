@@ -1,44 +1,43 @@
-#define pinsNum 3
-#define stepsNum 3
-
 String cmd, CMDcur;
 int programNumber;
-int counter = 0;
-int PWM_White = 2;
+int lamp = 13;
+volatile int counter = 0;
+volatile int lampCounter = 0;
+int PWM_White = 250;
 int PWM_UV = 250;
 int UV_LED = 5;
 int WHITE_LED = 6;
 
 void setup()
 {
-  pinMode(2, INPUT); /// Our camera strobe in HIGH - Acquiring, LOW - not acquiring
+//  pinMode(2, INPUT_PULLUP); /// Our camera strobe in HIGH - Acquiring, LOW - not acquiring
   pinMode(UV_LED, OUTPUT);// UV LED
+  pinMode(2,INPUT_PULLUP);
   pinMode(WHITE_LED, OUTPUT);// White LED
-  //  for(int i = 0; i < WL_NUM; i++)
-  //    pinMode(5 + i ,OUTPUT); // LED control OUTPUTS (could be later moved to PWM or AM intensity control)
-  //  pinMode(WL_NUM + 5, OUTPUT);  //Loop control; happens only once per cycle of all LEDs; for debug
   pinMode(13, OUTPUT); ///LAMP !
   analogWrite(WHITE_LED, PWM_White);
   Serial.begin(115200);
   Serial.setTimeout(100);
-  attachInterrupt(0, Strob_Input_Handler, RISING);
-  while (!Serial) {
-    ;
-  }
+  attachInterrupt(0, Strob_Input_Handler, FALLING);
+//  while (!Serial) {
+//    ;
+//  }
 }
 
 
-void Strob_Input_Handler() {
-  if (counter == 1) {
+void Strob_Input_Handler() { 
+  if (counter == 2) {
+    counter = 0;
+    }
+     if (counter == 1) {
     analogWrite(UV_LED, PWM_UV);
   }
   else {
     analogWrite(UV_LED, 0);
   }
   counter++;  // + синхр.
-  if (counter == 2) {
-    counter = 0;
-  }
+  lampCounter += 1;
+  
 }
 void waiting_4_command() {
   int PWM_VAL, PWM_VALH, PWM_VALL;
@@ -78,4 +77,8 @@ void waiting_4_command() {
 void loop()
 {
   waiting_4_command();
+  if (lampCounter == 10)
+  {
+    digitalWrite(lamp, HIGH);
+  }
 }
