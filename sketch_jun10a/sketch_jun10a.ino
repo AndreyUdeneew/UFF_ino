@@ -1,5 +1,5 @@
 int WL_NUM = 2;   //Number of Wavelengths (LED drivers connected), should not be higher than 7
-int PWM_White = 250;
+int PWM_White = 2;
 int PWM_UV = 250;
 int UV_LED = 6;
 int WHITE_LED = 5;

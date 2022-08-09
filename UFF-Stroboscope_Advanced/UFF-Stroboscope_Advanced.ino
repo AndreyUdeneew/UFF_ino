@@ -3,10 +3,10 @@ int programNumber;
 int lamp = 13;
 volatile int counter = 0;
 volatile int lampCounter = 0;
-int PWM_White = 250;
+int PWM_White = 2;
 int PWM_UV = 250;
-int UV_LED = 5;
-int WHITE_LED = 6;
+int UV_LED = 6;
+int WHITE_LED = 5;
 
 void setup()
 {
@@ -19,9 +19,9 @@ void setup()
   Serial.begin(115200);
   Serial.setTimeout(100);
   attachInterrupt(0, Strob_Input_Handler, FALLING);
-//  while (!Serial) {
-//    ;
-//  }
+  while (!Serial) {
+    ;
+  }
 }
 
 
@@ -40,7 +40,7 @@ void Strob_Input_Handler() {
   
 }
 void waiting_4_command() {
-  int PWM_VAL, PWM_VALH, PWM_VALL;
+  int PWM_VAL, PWM_VALH, PWM_VALL, PWM_VALlowest;
   cmd = "";
   if (Serial.available()) {
     cmd = Serial.readString();
@@ -51,26 +51,22 @@ void waiting_4_command() {
   if (cmd.substring(0, 2) == "UV") {
     PWM_VALH = cmd[2] - '0';
     PWM_VALL = cmd[3] - '0';
-    if (cmd[3] != '\0') {
-      PWM_VAL = (PWM_VALH * 10) + (PWM_VALL * 1);
-    }
-    else {
-      PWM_VAL = (PWM_VALH * 1) + (PWM_VALL * 0);
-    }
-    PWM_UV = PWM_VAL;
+    PWM_VALlowest = cmd[4] - '0';
+        PWM_VAL = (PWM_VALH * 100) + (PWM_VALL * 10) + (PWM_VALlowest * 1);
+        PWM_UV = PWM_VAL;
+        Serial.println("UV has been changed");
+        Serial.println(PWM_VAL);
   }
 
   if (cmd.substring(0, 2) == "WH") {
     PWM_VALH = cmd[2] - '0';
     PWM_VALL = cmd[3] - '0';
-    if (cmd[3] != '\0') {
-      PWM_VAL = (PWM_VALH * 10) + (PWM_VALL * 1);
-    }
-    else {
-      PWM_VAL = (PWM_VALH * 1) + (PWM_VALL * 0);
-    }
-    PWM_White = PWM_VAL;
+    PWM_VALlowest = cmd[4] - '0';
+        PWM_VAL = (PWM_VALH * 100) + (PWM_VALL * 10) + (PWM_VALlowest * 1);
+        PWM_White = PWM_VAL;
     analogWrite(WHITE_LED, PWM_White);
+    Serial.println("WH has been changed");
+    Serial.println(PWM_VAL);
   }
 }
 
